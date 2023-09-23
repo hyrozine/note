@@ -1,0 +1,31 @@
+wq退出git log 状态
+git commit -m "" 提交并注释
+
+git checkout <哈希值/分支名>，引出HEAD ^ ~(num)   相对引用
+撤销变更：  git reset 将当前commit删除，用于本地仓库修改   git revert 删除当前commit并将该删除操作记录在当前commit的分支下，用于远程协作
+
+git branch -f (分支名)  {HEAD（）}     将分支强行转移到指定位置。后面（）内填^表示HEAD上一级
+~(num)表示HEAD 上num级。 （）内不填表示转移到HEAD位置     { }内填哈希值亦可将相应分支移动到指定位置
+
+git merge (分支名)，将某一分支合并到当前分支（HEAD在的分支）
+HEAD即为操作的对象
+
+git rebase <分支名/哈希值>，将HEAD所在分支复制到<分支名>处
+
+git rebase -i HEAD~(num) ，交互式 调整（顺序）/省略 选中的commit
+
+git commit --amend 对HEAD所在commit进行修改
+ 
+git cherry-pick <哈希值> <哈希值> <> ...将所选的commit复制到HEAD下的分支
+
+git tag （tag名） （commit的哈希值/不指明则默认给HEAD位置打tag） 给某一commit打tag
+
+git describe <ref>
+<ref> 可以是任何能被 Git 识别成提交记录的引用，如果你没有指定的话，Git 会使用你目前所在的位置（HEAD）。
+它输出的结果是这样的：
+<tag>_<numCommits>_g<hash>
+tag 表示的是离 ref 最近的标签， numCommits 是表示这个 ref 与 tag 相差有多少个提交记录， hash 表示的是你所给定的 ref 所表示的提交记录哈希值的前几位。
+当 ref 提交记录上有某个标签时，则只输出标签名称
+（用来确定某一次commit在整个树中的位置）
+
+git branch <dev> main~^2~  在指定位置设置分支（操作符可链式进行） 其中^2表示路径向parent2转移，不明确的话默认向parent1 转移。parent1即将另一分支合并的“主”分支。
