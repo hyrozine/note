@@ -392,3 +392,33 @@ a+1 ： a虽然是二维数组的地址，但是并没有单独放在sizeof内�
 *（a+1）：对第二行地址的解引用，拿到的是第二行
 &a[0]+1：对第一行的数组名取地址，拿出的是第一行的地址，加一得到第二行的地址
 
+cpp[x][y]-1:  理解为  *(*（cpp+x）+y) -1
+
+
+
+字符函数和字符串函数
+求字符串的长度： strlen
+长度不受限制的字符串函数：strcpy  strcat strcmp
+长度受限制的字符串函数：strncpy strncat strncmp
+字符串查找strstr strtok
+错误信息报告：strerror
+字符操作
+内存操作函数：memcpy memmove memset memcmp
+
+size_t strlen(const char* str)       字符串后隐藏\0。 strlen以\0为终止计数的记号
+strlen的返回类型是size_t （无符号整形）    （两个无符号整形相减不会是负数，符号位直接计入数值）
+
+char* strcpy(char* destination, const char* source)到\0截止，且会将\0拷贝过去。拷贝内容须以\0为结
+目标空间需可改且空间足够大        函数返回值是目标空间的地址
+
+strcat(char* destination, const char* source)  字符串追加
+源字符串必须以‘\0’结束。目标空间必须足够大以容纳源字符串的内容。目标空间必须可修改。
+函数返回值是目标空间的地址 会将\0拷贝过去
+该函数不能使字符串对自己实现追加，会破坏源字符串的\0，使代码陷入死循环。
+
+int strcmp(const char* str1, const char* str2)   比较两个字符串。函数会逐个比较两个字符串中的每个字符直到字符不相同或者遇到\0      第一个字符串小于第二个字符串，返回小于0的整形。等于返回0。大于返回大于0的整形。 注意：比较比的不是字符串的长度，而是每次两个字符的ASCII码值。
+
+char* strncpy(char* destination, const char* source, size_t num)
+num确定了需要拷贝的字符数  如果指定的字符数超过源字符串的长度，会以\0补充多余的长度
+
+strncat
