@@ -395,15 +395,13 @@ a+1 ： a虽然是二维数组的地址，但是并没有单独放在sizeof内�
 cpp[x][y]-1:  理解为  *(*（cpp+x）+y) -1
 
 
-
+字符分类函数：一系列判断字符类型的函数
 字符函数和字符串函数
 求字符串的长度： strlen
 长度不受限制的字符串函数：strcpy  strcat strcmp
 长度受限制的字符串函数：strncpy strncat strncmp
 字符串查找strstr strtok
 错误信息报告：strerror
-字符操作
-内存操作函数：memcpy memmove memset memcmp
 
 size_t strlen(const char* str)       字符串后隐藏\0。 strlen以\0为终止计数的记号
 strlen的返回类型是size_t （无符号整形）    （两个无符号整形相减不会是负数，符号位直接计入数值）
@@ -421,4 +419,39 @@ int strcmp(const char* str1, const char* str2)   比较两个字符串。函数�
 char* strncpy(char* destination, const char* source, size_t num)
 num确定了需要拷贝的字符数  如果指定的字符数超过源字符串的长度，会以\0补充多余的长度
 
-strncat
+strncat  : 道理相同，可规定传递的字符数。在追加字符后，会在最后一个字符后添加\0。而如果要求追加的字符数超过源字符串的长度，只会追加完后添加一个\0，不会自动补充多余的长度。
+
+strncmp : 类似
+
+strstr： 查找子串的一个函数
+const char* strstr(const char* destination , const char* aim)
+Returns a pointer to the first occurrence of str2 in str1, or a null pointer if str2 is not part of str1.
+
+char *strtok(char* str, const char* sep)  
+切割字符串
+sep参数是个字符串，定义了用作分隔符的字符集合。
+第一个参数指定一个字符串，它包含了0个或者多个由sep字符串中一个或者多个分割符分割的标记。
+strtok函数找到str的下一个标记，并将其用‘\0’结尾，返回一个指向这个标记的指针。（即指向标记以前的字符串，返回的是字符串第一个字符的地址）（值得注意的是，strtok函数会改变被操作的字符串，所以在使用strtok函数切分的字符串一般都是临时拷贝的内容）
+strtok函数的第一个参数不为NULL，函数将找到str中第一个标记，strtok函数将保存它在字符串中的位置。
+strtok函数的第一个参数为NULL，函数将在同一个字符串中被保存的位置开始，查找下一个标记
+（即想使用分割好后的字符串，需主动将NULL传递过去，从而一段段提取分割好的字符串，每个分割位点都需要手动传参使用）（该函数有一定的记忆功能，使用了静态变量）
+如果字符串中不存在更多的标记，则返回NULL指针。
+e.g: const char* sep = ".";
+char string[ ] = "aosid.fjia.sdf.asodfja";
+char cp[ ] = { 0 };
+strcpy(cp, string);
+char* ret = NULL;
+for(ret = strtok(cp, sep);ret != NULL; ret = strtok(NULL, sep))
+{
+                printf("%s\n", ret);
+}
+
+char* strerror( int errnum )
+Interprets the value of errnum, generating a string with a message that describes the error condition as if set to errno by a function of the library.
+
+The returned pointer points to a statically allocated string, which shall not be modified by the program. Further calls to this function may overwrite its content (particular library implementations are not required to avoid data races).
+
+The error strings produced by strerror may be specific to each system and library implementation.
+
+内存操作函数：memcpy memmove memset memcmp
+memcpy：
